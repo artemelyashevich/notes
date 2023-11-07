@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,23 +31,11 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post create(String title, String body, MultipartFile file) throws Exception {
-        StringBuilder fileNames = new StringBuilder();
-
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        Path path = null;
-
-        try {
-            path = Paths.get(UPLOAD_DIRECTORY + "\\" + fileName);
-            log.info("\t\t\t\t\t\t\tFile" + path);
-            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         final Post newPost = Post
                 .builder()
                 .title(title)
                 .body(body)
-                .imagePath(fileName.toString())
+                .imagePath(getFilePath(file).toString())
                 .build();
         return postRepository.save(newPost);
     }
@@ -64,16 +51,39 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post update(Post post) {
-        final Post post1 = postRepository.findById(post.getId()).orElseThrow();
-        post1.setBody(post.getBody());
-        post1.setTitle(post.getTitle());
-        return postRepository.save(post1);
+    public Post update(Long id, String title, String body, MultipartFile file) throws Exception {
+        final Post post = postRepository.findById(id).orElseThrow();
+        if (!title.isEmpty()) {
+            post.setTitle(title);
+        }
+        if (!body.isEmpty()) {
+            post.setBody(body);
+        }
+        if (!file.isEmpty()) {
+            post.setImagePath(getFilePath(file));
+        }
+        return postRepository.save(post);
     }
 
     @Override
     public void delete(Long id) {
         final Post post = postRepository.findById(id).orElseThrow();
         postRepository.delete(post);
+    }
+
+    private String getFilePath(MultipartFile file) {
+        StringBuilder fileNames = new StringBuilder();
+
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        Path path = null;
+
+        try {
+            path = Paths.get(UPLOAD_DIRECTORY + "\\" + fileName);
+            log.info("\t\t\t\t\t\t\tFile" + path);
+            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fileName;
     }
 }

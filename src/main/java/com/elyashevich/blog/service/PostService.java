@@ -10,6 +10,6 @@ public interface PostService {
     Post create(String title, String body, MultipartFile file) throws Exception;
     Post findById(Long id);
     Post findByTitle(String title);
-    Post update(Post post);
+    Post update(Long id, String title, String body, MultipartFile file) throws Exception;
     void delete(Long id);
 }

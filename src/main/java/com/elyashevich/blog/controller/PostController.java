@@ -20,7 +20,7 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping
-    public String getAllPosts(Model model) {
+    public String getAllPosts(final Model model) {
         List<Post> posts = postService.findAll();
         model.addAttribute("posts", posts);
         return "posts";
@@ -48,15 +48,30 @@ public class PostController {
         return "redirect:/posts/" + post.getId();
     }
 
+    @GetMapping("/posts/edit/{id}")
+    public String editForm(final @PathVariable Long id, final Model model) {
+        Post post = postService.findById(id);
+        model.addAttribute("post", post);
+        return "post-edit";
+    }
+
+    @PutMapping("/posts/edit/{id}")
+    public String edit(
+            final @PathVariable Long id,
+            final @RequestParam String title,
+            final @RequestParam String body,
+            final @RequestParam MultipartFile image
+    ) throws Exception {
+        log.info("TITLE = " + title);
+        log.info("FILE = " + image.getName());
+        log.info("BODY = " + body.isEmpty());
+        Post post = postService.update(id, title, body, image);
+        return "redirect:/posts/" + post.getId();
+    }
+
     @DeleteMapping("/{id}")
     public String deleteOnePost(final @PathVariable(value = "id") Long id) {
         postService.delete(id);
-        return "redirect:/";
-    }
-
-    @PutMapping("/{id}")
-    public String edit(final @PathVariable(value = "id") Long id) {
-        log.info("PUT REQUEST");
         return "redirect:/";
     }
 }
