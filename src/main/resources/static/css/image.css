@@ -1,0 +1,24 @@
+.one__card {
+    height: 100%;
+    overflow: hidden;
+}
+
+.one__card img {
+    height: 65%;
+    padding: 1%;
+    overflow: hidden;
+}
+
+h5 {
+    padding: 1%;
+}
+
+.col {
+    height: 25rem;
+}
+
+.col img {
+    height: 65%;
+    padding: 1%;
+    overflow: hidden;
+}
