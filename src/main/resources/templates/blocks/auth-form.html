@@ -1,0 +1,19 @@
+<div th:fragment="auth-form">
+    <div class="container py-3 d-flex justify-content-center">
+        <form class="mb-5 mt-5 w-50" style="margin-bottom: 5rem !important" th:method="post"  th:object="${person}">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" name="username" class="form-control">
+                <p th:errors="*{username}" class="text-danger"
+                   th:if="${#fields.hasErrors('username')}"></p>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control"/>
+                <p th:errors="*{password}" class="text-danger"
+                   th:if="${#fields.hasErrors('password')}"></p>
+            </div>
+            <button type="submit" class="btn btn-primary d-flex justify-content-center" style="margin: 0 auto">Submit</button>
+        </form>
+    </div>
+</div>

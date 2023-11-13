@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="blocks/head :: head"></head>
+<body>
+    <div th:insert="blocks/layout/header :: header"></div>
+        <h3 class="d-flex justify-content-center mt-3" th:text="${title}"></h3>
+        <div th:insert="blocks/auth-form :: auth-form"></div>
+    <div class="mt-5" th:insert="blocks/layout/footer :: footer"></div>
+</body>
+</html>

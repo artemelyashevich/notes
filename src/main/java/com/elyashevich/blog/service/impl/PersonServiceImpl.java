@@ -29,12 +29,12 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person findByUsername(String username) {
-        return personRepository.findByUsername(username).orElseThrow();
+        return personRepository.findByUsername(username);
     }
 
     @Override
     public Person update(Person person) {
-        final Person currPerson = personRepository.findByUsername(person.getUsername()).orElseThrow();
+        final Person currPerson = personRepository.findByUsername(person.getUsername());
         currPerson.setPassword(person.getPassword());
         currPerson.setUsername(person.getUsername());
         return personRepository.save(currPerson);
