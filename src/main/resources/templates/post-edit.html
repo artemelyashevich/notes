@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="">
-<div th:insert="~{blocks/layout/header :: header}">
+<head th:insert="~{blocks/head :: head}"></head>
 <body>
-<div th:insert="blocks/layout/header :: header"></div>
+<div th:insert="~{blocks/layout/header :: header}"></div>
 <div class="container py-3 d-flex justify-content-center">
     <div style="width:50%" class="d-flex align-items-center column-gap-2">
         <img style="max-width: 70%" th:src="'/images/' + ${post.imagePath}">
@@ -30,6 +30,6 @@
     </div>
 
 </div>
-<div th:insert="blocks/layout/footer :: footer"></div>
+<div th:insert="~{blocks/layout/footer :: footer}"></div>
 </body>
 </html>

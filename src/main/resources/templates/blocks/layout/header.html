@@ -6,7 +6,7 @@
                     <span class="fs-4">Notes</span>
                 </a>
                 <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-                    <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
+                    <a class="me-3 py-2 text-dark text-decoration-none" sec:authorize="isAuthenticated()" aria-current="page" th:href="@{/logout}">Logout</a>
                     <a class="me-3 py-2 text-dark text-decoration-none" href="/auth/sign-up">Sign Up</a>
                     <a class="me-3 py-2 text-dark text-decoration-none" href="/posts/create">Create new note</a>
                 </nav>

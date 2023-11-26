@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:insert="~{blocks/layout/header :: header}">
+<head th:insert="~{blocks/head :: head}">
+    <title>Create new Note</title>
+</head>
 <body>
-<div th:insert="blocks/layout/header :: header"></div>
+<div th:insert="~{blocks/layout/header :: header}"></div>
 <div class="container py-3 d-flex justify-content-center">
     <form class="mb-5 mt-5 w-50" style="margin-bottom: 5rem !important" th:method="post" enctype="multipart/form-data">
         <div class="mb-3">
@@ -20,6 +22,6 @@
         <button type="submit" class="btn btn-primary d-flex justify-content-center" style="margin: 0 auto">Submit</button>
     </form>
 </div>
-<div class="mt-5" th:insert="blocks/layout/footer :: footer"></div>
+<div class="mt-5" th:insert="~{blocks/layout/footer :: footer}"></div>
 </body>
 </html>

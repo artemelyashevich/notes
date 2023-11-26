@@ -41,7 +41,6 @@ public class AuthServiceImpl implements AuthService {
     public Person resetPassword(PersonDto personDto, String newPassword) {
         Person person = personRepository.findByUsername(personDto.getUsername());
         if (passwordEncoder.matches(personDto.getPassword(), person.getPassword())) {
-            log.info(String.format("\t\t\tPASSWORD = %s", passwordEncoder.encode(newPassword)));
             person.setPassword(passwordEncoder.encode(newPassword));
         } else {
             log.info(String.format("\t\t\tPassword %s != %s", personDto.getPassword(), person.getPassword()));

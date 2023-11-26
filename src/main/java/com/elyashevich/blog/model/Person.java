@@ -1,8 +1,24 @@
 package com.elyashevich.blog.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 import java.util.Objects;
@@ -29,13 +45,35 @@ public class Person {
     @NotEmpty(message = "Password should not be empty")
     @Column(name = "password")
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade =
+            {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            }
+    )
     @JoinTable(
             name = "people_roles",
             joinColumns = {@JoinColumn(name = "PERSON_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")}
     )
     private List<Role> roles;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade =
+            {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            }
+    )
+    @JoinTable(
+            name = "people_posts",
+            joinColumns = {@JoinColumn(name = "PERSON_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "POST_ID", referencedColumnName = "ID")}
+    )
+    private List<Post> posts;
 
     @Override
     public boolean equals(Object o) {

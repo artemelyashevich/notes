@@ -7,7 +7,8 @@ import com.elyashevich.blog.service.PersonService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.parameters.P;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,11 +53,12 @@ public class AuthController {
             return "auth";
         }
         authService.createNewPerson(personDto);
-        return "redirect:/auth/sign-up";
+        return "redirect:/";
     }
 
     @GetMapping("/sign-in")
     public String signIn(final Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         PersonDto personDto = new PersonDto();
         model.addAttribute("title", "Sign In");
         model.addAttribute("person", personDto);
@@ -64,7 +66,8 @@ public class AuthController {
     }
 
     @GetMapping("/reset-password")
-    public String getResetForm() {
+    public String getResetForm(final Model model) {
+        model.addAttribute("title", "Sign Up");
         return "/reset-password";
     }
 

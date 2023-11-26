@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:insert="~{blocks/layout/header :: header}">
+<head th:insert="~{blocks/head :: head}"></head>
 <body>
-<div th:insert="blocks/layout/header :: header"></div>
+<div th:insert="~{blocks/layout/header :: header}"></div>
 <div class="container py-3 d-flex align-items-center justify-content-center column-gap-3">
     <img style="max-width: 60%" th:src="'/images/' + ${post.imagePath}">
     <div>
@@ -10,6 +10,6 @@
         <p th:text="${post.body}"/>
     </div>
 </div>
-<div th:insert="blocks/layout/footer :: footer"></div>
+<div th:insert="~{blocks/layout/footer :: footer}"></div>
 </body>
 </html>
